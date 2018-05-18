@@ -12,6 +12,6 @@
 // http://container.thephpleague.com/2.x/
 
 $container = $app->getContainer();
-require './dependencies/db.php';
-require './dependencies/logger.php';
-require './dependencies/404.php';
+require 'dependencies/db.php';
+require 'dependencies/logger.php';
+require 'dependencies/404.php';

@@ -4,7 +4,8 @@
         "monolog/monolog": "^1.23.0",
         "league/container": "^2.4",
         "catfan/Medoo": "^1.4",
-        "ramsey/uuid": "^3.7"
+        "ramsey/uuid": "^3.7",
+        "slim/php-view": "^2.2"
     },
     "autoload": {
         "psr-4": {

@@ -30,15 +30,15 @@ $app->add(function ($request, $response, $next) use ($container) {
     };
 
     return $response
-        ->withStatus($status)
-        ->withHeader('Content-type', 'application/json');
+        ->withStatus($status);
+        //->withHeader('Content-type', 'application/json');
 });
 
 // Sample.
 // $app->add(function ($request, $response, $next) {
-//     $response->getBody()->write('BEFORE');
+//     $response->getBody()->write('Check permission');
 //     $response = $next($request, $response);
-//     $response->getBody()->write('AFTER');
+//     $response->getBody()->write('Say hi to every one');
 
 //     return $response;
 // });
