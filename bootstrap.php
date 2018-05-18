@@ -17,12 +17,15 @@ chdir(dirname(__DIR__));
 $settings = require 'config/app.php';
 
 
-//Built in slider
 $container = new \Slim\Container($settings);
 // view renderer
-$container['renderer'] = function ($c) {
+$container['view'] = function ($c) {
   $settings = $c->get('settings')['renderer'];
   return new PhpRenderer($settings['template_path']);
+};
+
+$container['HomeController'] = function ($c) {
+  return new \App\Controllers\HomeController($c);
 };
 
 // Get an instance of Slim.

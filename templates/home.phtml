@@ -1,15 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Lotus APP</title>
+<html>
+<head
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="./css/style.css" />
+	<script src="./js/jquery.js"></script>
+	<script src="./js/chart.js"></script>
+	<script src="./js/utils.js"></script>
 </head>
 <body>
-  <pre>
-   <?php  print_r($data); ?>
-  </pre>
-  <div id="lotus_app">App will show here</div>
+<div class="grid-container">
+	<div class="header">
+		<div class="header_left">
+			<div>Menu</div>
+		</div>
+		<div class="header_center">
+			<h2>BÁO CÁO NỘI BỘ DƯỢC PHẨM TUỆ ĐỨC</h2>
+		</div>
+		<div class="header_right">Liên Kết</div>
+	</div>
+	<div class="menu menu_active">
+			<a href="#"><img width="200" src="images/logo-pharma.png" /></a>
+		<div class="block_ava">
+			<a href="#"><img src="images/ava.jpg" /></a>
+			<p>Xin chào,<span>Admin!</span></p>
+		</div>
+		<div class="main_menu">
+			<div class="menu_item active">
+				<div class="info">Tất cả biểu đồ</div>
+			</div>
+			<div class="menu_item">
+				<div class="info">Biểu đồ doanh thu</div>
+			</div>
+			<div class="menu_item">
+				<div class="info">Biểu đồ Nhà Thuốc</div>
+			</div>
+			<div class="menu_item">
+				<div class="info">Biểu đồ Sản Phẩm</div>
+			</div>
+			<div class="menu_item">
+				<div class="info">Biểu đồ địa lý</div>
+			</div>
+		</div>
+	</div>
+	<div class="isd_main">
+		<div class="main_title">
+			<div class="balance">
+				<label>DOANH THU THÁNG 5</label>
+				<span>5.000.000.000.000</span>
+			</div>
+			<div class="paypal">Tạo biểu đồ</div>
+		</div>
+		<div class="main_content">
+			<div class="main_content_left">
+				<h2>Doanh thu theo sản phẩm năm 2018</h2>
+				<div class="control">
+					<div class="filter_time">
+						<div class="isd_filter">Lọc Theo</div>
+						<div class="action_filter filter_date" filter="week">Tuần</div>
+						<div class="action_filter filter_date" filter="month">Tháng</div>
+						<div class="action_filter filter_date" filter="year">Năm</div>
+						<div class="action_filter" filter="doanhso">Doanh Thu</div>
+						<div class="action_filter" filter="dialy">Vùng miền</div>
+						<div class="action_filter" filter="product">Sản Phẩm</div>
+						<div class="action_filter" filter="nhathuoc">Nhà Thuốc</div>
+						<div class="search_adv hidden">Từ ngày : <input type="date" data-date-format="DD MMMM YYYY" /> đến ngày : <input type="date" /></div>
+					</div>
+					<div class="hidden ds_nhathuoc">
+						<select>
+							<option value="id_nhathuoc">Nhà Thuốc Phương Chính</option>
+							<option value="id_nhathuoc">Nhà Thuốc Phương Chính</option>
+							<option value="id_nhathuoc">Nhà Thuốc Phương Chính</option>
+							<option value="id_nhathuoc">Nhà Thuốc Phương Chính</option>
+							<option value="id_nhathuoc">Nhà Thuốc Phương Chính</option>
+							<option value="id_nhathuoc">Nhà Thuốc Phương Chính</option>
+							<option value="id_nhathuoc">Nhà Thuốc Phương Chính</option>
+						</select>
+					</div>
+					<div class="hidden ds_sanpham">
+						<label>Lọc theo sản phẩm </label>
+						<select>
+							<option value="id_sanpham">Hoàn nguyên cốt</option>
+							<option value="id_sanpham">Thận khí khang</option>
+							<option value="id_sanpham">Tuệ Đức Kids</option>
+							<option value="id_sanpham">Khớp Nữ</option>
+							<option value="id_sanpham">Bảo Ích Can</option>
+						</select>
+					</div>
+					<div class="hidden ds_vungmien">
+						<select>
+							<option value="mien_bac">Miền Bắc</option>
+							<option value="mien_trung">Miền Trung</option>
+							<option value="mien_nam">Miền Nam</option>
+						</select>
+						<select>
+							<option value="id_tinh">Tỉnh A</option>
+							<option value="id_tinh">Tỉnh B</option>
+							<option value="id_tinh">Tỉnh C</option>
+						</select>
+						<select>
+							<option value="id_huyen">Huyện A</option>
+							<option value="id_huyen">Huyện B</option>
+							<option value="id_huyen">Huyện C</option>
+						</select>
+					</div>
+				</div>
+				<div class="list_infos">
+					<div id="isd_baocao_nam"><canvas id="isd_baocao_nam_bieudo"></canvas></div>
+				</div>
+			</div>
+		</div>
+	</div>  
+  </div>
+  <div style="display: none;">
+	<button id="addDataset">Add Dataset</button>
+	<button id="removeDataset">Remove Dataset</button>
+	<button id="addData">Add Data</button>
+	<button id="removeData">Remove Data</button>
+  </div>
+  <script src="js/setup.js"></script>
 </body>
 </html>

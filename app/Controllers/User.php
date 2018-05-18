@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controllers;
 
 // PSR 7 standard.
 use \Psr\Http\Message\ServerRequestInterface as Request;
