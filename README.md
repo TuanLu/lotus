@@ -25,10 +25,6 @@ Then, access the app at http://localhost:8080/
 * [The League Container (Dependency Injection)](https://github.com/thephpleague/container) - A simple but powerful dependency injection container.
 * [ramsey/uuid](https://github.com/ramsey/uuid) - A PHP 5.4+ library for generating RFC 4122 version 1, 3, 4, and 5 universally unique identifiers (UUID).
 
-## Notes
+## Setup Virtual Host
 
-1. [Operation timed out (IPv6 issues)](https://getcomposer.org/doc/articles/troubleshooting.md#operation-timed-out-ipv6-issues-). On linux, it seems that running this command helps to make ipv4 traffic have a higher prio than ipv6, which is a better alternative than disabling ipv6 entirely:
-
-`$ sudo sh -c "echo 'precedence ::ffff:0:0/96 100' >> /etc/gai.conf"`
-
-2. Run `$ sudo composer self-update` regularly.
+* http://foundationphp.com/tutorials/vhosts_mamp.php

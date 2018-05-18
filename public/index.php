@@ -9,7 +9,7 @@ require 'bootstrap.php';
 
 // Configure the Slim app.
 // https://www.slimframework.com/docs/objects/application.html
-$settings = require 'config/application.php';
+$settings = require 'config/app.php';
 
 // Using a different container
 // http://discourse.slimframework.com/t/using-a-different-container/1029

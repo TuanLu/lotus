@@ -7,8 +7,8 @@ $container->add('notFoundHandler', function() use ($container) {
         return $container->get('response')
             ->withStatus(404)
             // Middleware will take care of this so comment them.
-            // ->withHeader('Content-Type', 'text/html')
-            // ->write('Page not found')
+            ->withHeader('Content-Type', 'text/html')
+            ->write('Sorry! Page not found')
             ;
     };
 });
