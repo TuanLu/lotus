@@ -23,3 +23,5 @@ use \Psr\Http\Message\ResponseInterface as Response;
 // });
 
 $app->get('/', 'HomeController:index');
+$app->get('/import', 'ImportController:index');
+$app->post('/upload', 'ImportController:upload');

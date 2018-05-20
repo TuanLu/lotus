@@ -27,6 +27,9 @@ $container['view'] = function ($c) {
 $container['HomeController'] = function ($c) {
   return new \App\Controllers\HomeController($c);
 };
+$container['ImportController'] = function ($c) {
+  return new \App\Controllers\ImportController($c);
+};
 
 // Get an instance of Slim.
 $app = new \Slim\App($container);

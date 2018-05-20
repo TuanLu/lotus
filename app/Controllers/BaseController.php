@@ -11,4 +11,8 @@ class BaseController {
       return $this->container->{$prop};
     }
   }
+  public function baseDir() {
+    $dir = __DIR__;
+    return str_replace('app/Controllers', '', $dir);
+  }
 }
