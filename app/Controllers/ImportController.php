@@ -1,7 +1,5 @@
 <?php 
 namespace App\Controllers;
-use \PhpOffice\PhpSpreadsheet\Spreadsheet;
-use \PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class ImportController extends BaseController {
   const MAX_UPLOAD_FILESIZE = 20000000;//20M
@@ -56,7 +54,8 @@ class ImportController extends BaseController {
       if (move_uploaded_file($_FILES["filename"]["tmp_name"], $target_file)) {
           //Try to read excel
           try {
-            $data = $this->readExcel($target_file);
+            $helper = new \App\Helper\Data();
+            $data = $helper->readExcel($target_file);
             $resStatus['status'] = 'success';
             $resStatus['message'] = "The file ". $filename. " has been uploaded.";
             $resStatus['data'] = $data;

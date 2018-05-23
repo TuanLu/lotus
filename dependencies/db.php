@@ -20,7 +20,8 @@ $container['db'] = function ($c) {
         'database_name' => $dbconfig['name'],
         'server' => $dbconfig['host'],
         'username' => $dbconfig['username'],
-        'password' => $dbconfig['password']
+        'password' => $dbconfig['password'],
+        'logging' => true
     ]);
     return $db;
 };

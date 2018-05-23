@@ -1,57 +1,44 @@
 <?php 
 namespace App\Controllers;
 use \Slim\Views\PhpRenderer;
-use \PhpOffice\PhpSpreadsheet\Spreadsheet;
-use \PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use \App\Helper\Data;
 
 class HomeController extends BaseController {
   public function index($request, $response) {
-    $filePath = $this->baseDir() . 'resource/Nha_thuoc_chuan_hoa_new.xlsx';
-    if(!isset($_SESSION['data_nhathuoc'])) {
-      $data = $this->readExcel($filePath);
-      $_SESSION['data_nhathuoc'] = $data;
+    die('Home Controller');
+    $helper = new \App\Helper\Data();
+    //echo $helper->convertStringToDate('d/m/y', "25/12/16");
+    $filePath = $this->baseDir() . 'resource/orders.xlsx';
+    unset($_SESSION['orders']);
+    if(!isset($_SESSION['orders'])) {
+      $data = $helper->readExcel($filePath);
+      $_SESSION['orders'] = $data;
     } else {
-      $data = $_SESSION['data_nhathuoc'];
-    }
-    //echo count($data);
-    
-    echo "<pre>";
-    //print_r($data[2]);
-    //Database instance
-    $db = $this->db;
+      $data = $_SESSION['orders'];
+    }   
+
 
     $validDataArr = [];
-    
-    foreach($data as $product) {
+    foreach($data as $order) {
       $validDataArr[] = array(
-        "store_id" => $product['A'],
-        "name" => $product['B'],
-        "address" => $product['C'],
-        "owner" => $product['D'],
-        "phone" => $product['E'],
-        "district" => $product['F'],
-        "province" => $product['G'],
+        "store_id" => $order['C'],
+        "product_id" => $order['D'],
+        "price" => $order['E'],
+        "qty" => $order['B'],
+        "date" => $helper->convertStringToDate('d/m/y', $order['A']),
       );
     }
-  
-    $this->db->insert('nha_thuoc', $validDataArr);
+    // echo "<pre>";
+    // print_r(count($validDataArr));
+    // die;
+     //Database instance
     
+    //$result = $this->db->insert('orders', $validDataArr);
 
 
-    die('Done import');
+    die('Done import: ' . $result->rowCount());
 
     $response->getBody()->write(json_encode($data));
     return $response->withHeader('Content-type', 'application/json');
-  }
-  public function readExcel($path) {
-    if(file_exists($path)) {
-      $reader = new Xlsx();
-      $spreadsheet = $reader->load($path);
-      $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-      //Remove title row of excel
-      unset($sheetData[1]);
-      return $sheetData;
-    }
-    return [];
   }
 }
