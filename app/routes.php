@@ -27,3 +27,4 @@ $app->get('/import', 'ImportController:index');
 $app->post('/upload', 'ImportController:upload');
 $app->get('/report', 'ReportController:index');
 $app->get('/chart', 'ReportController:chart');
+$app->get('/product', 'ReportController:product');

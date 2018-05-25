@@ -6,8 +6,86 @@ class Chart {
   public function __construct($db) {
     $this->db = $db;
   }
-  public function reportByQuarter($year) {
-    $data = $this->db->query("SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, QUARTER(date) as <quy> FROM <orders> WHERE YEAR(date) = $year GROUP BY <quy> ORDER BY <quy>")->fetchAll(\PDO::FETCH_ASSOC);
+  public function reportByYear($year, $productId) {
+    $sql = "SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, Year(date) as <nam> FROM <orders> GROUP BY <nam> ORDER BY <nam>";
+    if($productId != "" && $productId != "all") {
+      $sql = "SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, Year(date) as <nam> FROM <orders> WHERE <product_id> = '" . $productId ."' GROUP BY <nam> ORDER BY <nam>";
+    }
+    $data = $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    if(empty($data)) {
+      return array(
+        'status' => 'error', 
+        'message' => 'Empty data!'
+      );
+    }
+    $report = array();
+    foreach($data as $quy) {
+      $report['labels'][] = "Năm " . $quy['nam'];
+      $report['data'][] = $quy['doanhthu'];
+    }
+    $chartData = array(
+      'labels' => $report['labels'],
+      'datasets' => array(
+        [
+          'label' => 'Mục tiêu',
+          'data' => [15,20,30,40],
+          'backgroundColor' => 'rgba(255, 99, 132, 1)'
+        ],
+        [
+          'label' => 'Doanh thu thực',
+          'data' => $report['data'],
+          'backgroundColor' => 'rgba(54, 162, 235, 1)',
+        ]
+      ),
+    );
+    $barChart['data'] = $chartData;
+    //Chart options 
+    $barChart['options'] = array(
+      'maintainAspectRatio' => false,
+      'title' => array(
+        'display' => true,
+		'text' => 'Báo Cáo Doanh Thu Theo Năm'
+      ),
+      'scales' => [
+        'xAxes' => [
+          [
+            'ticks' => [
+              'beginAtZero' => true
+            ],
+            'scaleLabel' => [
+              'display' => true,
+              'labelString' => "Biểu đồ doanh thu các năm",
+              'fontStyle' => 'bold',
+              'fontColor' => '#ccc'
+            ]
+          ]
+        ],
+        'yAxes' => [
+          [
+            'ticks' => [
+              'beginAtZero' => true
+            ],
+            'scaleLabel' => [
+              'display' => true,
+              'labelString' => 'Triệu (VND)',
+              'fontStyle' => 'bold',
+              'fontColor' => '#ccc'
+            ]
+          ]
+        ]
+      ]
+    );
+    $barChart['width'] = 300;
+    $barChart['height'] = 300;
+    return $barChart;
+  }
+  public function reportByQuarter($year, $productId) {
+    $sql = "SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, QUARTER(date) as <quy> FROM <orders> WHERE YEAR(date) = $year GROUP BY <quy> ORDER BY <quy>";
+    if($productId != "" && $productId != "all") {
+      $sql = "SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, QUARTER(date) as <quy> FROM <orders> WHERE YEAR(date) = $year AND <product_id> = '" . $productId ."' GROUP BY <quy> ORDER BY <quy>";
+    }
+    
+    $data = $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     if(empty($data)) {
       return array(
         'status' => 'error', 
@@ -75,8 +153,12 @@ class Chart {
     $barChart['height'] = 300;
     return $barChart;
   }
-  public function reportByMonthOfYear($year) {
-    $data = $this->db->query("SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, MONTH(date) as <thang> FROM <orders> WHERE YEAR(date) = $year GROUP BY <thang> ORDER BY <thang>")->fetchAll(\PDO::FETCH_ASSOC);
+  public function reportByMonthOfYear($year, $productId) {
+    $sql = "SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, MONTH(date) as <thang> FROM <orders> WHERE YEAR(date) = $year GROUP BY <thang> ORDER BY <thang>";
+    if($productId != "" && $productId != "all") {
+      $sql = "SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, MONTH(date) as <thang> FROM <orders> WHERE YEAR(date) = $year AND product_id='". $productId ."' GROUP BY <thang> ORDER BY <thang>";
+    }
+    $data = $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     if(empty($data)) {
       return array(
         'status' => 'error', 
@@ -93,8 +175,15 @@ class Chart {
       'datasets' => array(
         [
           'label' => 'Mục tiêu',
-          'data' => [15,20,30,40],
-          'backgroundColor' => 'rgba(255, 99, 132, 1)'
+          'type' => 'line',
+          'data' => [1000,1200,1400,1600,2000,2200,2400,3000,3200,3300,3800,4000],
+          'fill' => false,
+          'backgroundColor' => 'rgba(255, 99, 132, 1)',
+          'borderColor' => '#ED6D85',
+          'pointBorderColor' => '#ED6D85',
+          'pointBackgroundColor' => '#ED6D85',
+          'pointHoverBackgroundColor' => '#ED6D85',
+          'pointHoverBorderColor' => '#ED6D85',
         ],
         [
           'label' => 'Doanh thu thực',
@@ -144,8 +233,12 @@ class Chart {
     $barChart['height'] = 300;
     return $barChart;
   }
-  public function reportByWeekOfYear($year) {
-    $data = $this->db->query("SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, WEEKOFYEAR(date) as <tuan> FROM <orders> WHERE YEAR(date) = $year GROUP BY <tuan> ORDER BY <tuan>")->fetchAll(\PDO::FETCH_ASSOC);
+  public function reportByWeekOfYear($year, $productId) {
+    $sql = "SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, WEEKOFYEAR(date) as <tuan> FROM <orders> WHERE YEAR(date) = $year GROUP BY <tuan> ORDER BY <tuan>";
+    if($productId != "" && $productId != "all") {
+      $sql = "SELECT (sum(<qty>*<price>/1000000)) as <doanhthu>, WEEKOFYEAR(date) as <tuan> FROM <orders> WHERE YEAR(date) = $year AND product_id ='". $productId ."' GROUP BY <tuan> ORDER BY <tuan>";
+    }
+    $data = $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     if(empty($data)) {
       return array(
         'status' => 'error', 
@@ -165,8 +258,15 @@ class Chart {
       'datasets' => array(
         [
           'label' => 'Mục tiêu',
-          'data' => [15,20,30,40],
-          'backgroundColor' => 'rgba(255, 99, 132, 1)'
+          'type' => 'line',
+          'data' => [70,100,200,150,200,240,200,300,250,200,180,150,300,320,200,500,300,200,210,500,600],
+          'fill' => false,
+          'backgroundColor' => 'rgba(255, 99, 132, 1)',
+          'borderColor' => '#ED6D85',
+          'pointBorderColor' => '#ED6D85',
+          'pointBackgroundColor' => '#ED6D85',
+          'pointHoverBackgroundColor' => '#ED6D85',
+          'pointHoverBorderColor' => '#ED6D85',
         ],
         [
           'label' => 'Doanh thu thực',

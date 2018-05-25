@@ -4,7 +4,9 @@ namespace App\Controllers;
 class ImportController extends BaseController {
   const MAX_UPLOAD_FILESIZE = 20000000;//20M
   public function index($request, $response) {
-    $data = [];
+    $data = [
+      
+    ];
     return $this->view->render($response, 'import.phtml', $data);
   }  
   function upload($request, $response) {
