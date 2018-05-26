@@ -1,41 +1,71 @@
 <?php 
 namespace App\Controllers;
 use \App\Model\Chart;
+use \App\Model\AreaChart;
 
 class ReportController extends BaseController {
  
   public function index($request, $response) { 
-    $chart = new Chart($this->db);
     $params = $request->getQueryParams();
     if(!isset($params['year'])) {
       $params['year'] = date("Y");
     }
-    $type = '';
-    $productId = '';
-    if(isset($params['type'])) {
-      $type = $params['type'];
+    $filterParams = ['type', 'product-id', 'area'];
+    foreach($filterParams as $filterOption) {
+      $params[$filterOption] = isset($params[$filterOption]) ? $params[$filterOption] : '';
     }
-    if(isset($params['product-id'])) {
-      $productId = $params['product-id'];
+    if($params['type'] == '') {
+      return json_encode(array(
+        'status' => 'error',
+        'message' => 'The type of chart is empty!'
+      ));
     }
-    switch($type) {
+    switch($params['type']) {
       case 'weekofyear':
-        $reportQuarter = $chart->reportByWeekOfYear($params['year'], $productId);
+      case 'month':
+      case 'quarter':
+      case 'year':
+      case 'products':
+        $chart = new Chart($this->db);
+        break;
+      case 'areas':
+      case 'area_quarter':
+      case 'area_month':
+      case 'area_week':
+        $areaChart = new AreaChart($this->db);
+        break;
+    }
+    $reportData = array();
+    switch($params['type']) {
+      case 'weekofyear':
+        $reportData = $chart->reportByWeekOfYear($params['year'], $params['product-id']);
         break;
       case 'month':
-        $reportQuarter = $chart->reportByMonthOfYear($params['year'], $productId);
+        $reportData = $chart->reportByMonthOfYear($params['year'], $params['product-id']);
         break;
       case 'quarter':
-        $reportQuarter = $chart->reportByQuarter($params['year'], $productId);
+        $reportData = $chart->reportByQuarter($params['year'], $params['product-id']);
         break;
       case 'year':
-        $reportQuarter = $chart->reportByYear($params['year'], $productId);
+        $reportData = $chart->reportByYear($params['year'], $params['product-id']);
+        break;
+      case 'areas':
+        $reportData = $areaChart->reportByAreas($params['year'], $params['product-id'], $params['area']);
+        break;
+      case 'area_quarter':
+        $reportData = $areaChart->reportByAreasQuarter($params['year'], $params['product-id'], $params['area']);
+        break;
+      case 'area_month':
+        $reportData = $areaChart->reportByAreasMonth($params['year'], $params['product-id'], $params['area']);
+        break;
+      case 'area_week':
+        $reportData = $areaChart->reportByAreasWeek($params['year'], $params['product-id'], $params['area']);
         break;
       case 'products':
-        $reportQuarter = $chart->reportByProducts($params['year'], $productId);
+        $reportData = $chart->reportByProducts($params['year'], $params['product-id']);
         break;
     }
-    echo json_encode($reportQuarter);
+    echo json_encode($reportData);
   }
   public function chart($request, $response) {
     $data = [];
