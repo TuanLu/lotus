@@ -54,4 +54,22 @@ class StoreController extends BaseController {
     $response->getBody()->write(json_encode($rsData));
     return $response->withHeader('Content-type', 'application/json');
   }
+  public function deletestore($request, $response, $args) {
+    $rsData = array(
+      'status' => 'error',
+      'message' => 'Dữ liệu chưa được xoá thành công',
+    );
+    $id = $args['id'];
+    $store = new Stores($this->db);
+    $result = $store->deleteStore($id);
+    if($result) {
+      $rsData = array(
+        'status' => 'success',
+        'message' => 'Dữ liệu đã được xoá thành công',
+        'data' => $id
+      );
+    }
+    $response->getBody()->write(json_encode($rsData));
+    return $response->withHeader('Content-type', 'application/json');
+  }
 }

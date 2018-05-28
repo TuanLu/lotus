@@ -32,3 +32,4 @@ $app->get('/reportbyprovince', 'ReportByProvinceController:index');
 $app->get('/stores', 'StoreController:index');
 $app->get('/storeslocation', 'StoreController:location');
 $app->post('/updatestore', 'StoreController:updatestore');
+$app->delete('/deletestore/{id}', 'StoreController:deletestore');

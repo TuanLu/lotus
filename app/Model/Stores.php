@@ -1,5 +1,6 @@
 <?php 
 namespace App\Model;
+use \Ramsey\Uuid\Uuid;
 
 class Stores {
   protected $db;
@@ -23,6 +24,7 @@ class Stores {
   }
   public function updateStore($data) {
     if(isset($data['store_id']) && $data['store_id'] != "") {
+      echo "updaet mode";
       //Update mode
       $result = $this->db->update('nha_thuoc', [
         'store_id' => $data['store_id'],
@@ -36,7 +38,24 @@ class Stores {
       ]);
       return $result->rowCount();
     } else {
-      //Insert mode
+      //General New Store ID
+      $uuid1 = Uuid::uuid1();
+      $uuid = $uuid1->toString();
+      $result = $this->db->insert('nha_thuoc', [
+        'store_id' => $uuid,
+        'name' => $data['name'],
+        'address' => $data['address'],
+        'phone' => $data['phone'],
+        'owner' => $data['owner'],
+        'district_id' => $data['district_id'],
+      ]);
+      return $result->rowCount();
     }
+  }
+  public function deleteStore($storeId) {
+    $result = $this->db->delete('nha_thuoc', [
+      'store_id' => $storeId
+    ]);
+    return $result->rowCount();
   }
 }
