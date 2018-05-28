@@ -28,3 +28,7 @@ $app->post('/upload', 'ImportController:upload');
 $app->get('/report', 'ReportController:index');
 $app->get('/chart', 'ReportController:chart');
 $app->get('/product', 'ReportController:product');
+$app->get('/reportbyprovince', 'ReportByProvinceController:index');
+$app->get('/stores', 'StoreController:index');
+$app->get('/storeslocation', 'StoreController:location');
+$app->post('/updatestore', 'StoreController:updatestore');

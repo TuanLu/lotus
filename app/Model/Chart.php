@@ -44,7 +44,7 @@ class Chart {
       'maintainAspectRatio' => false,
       'title' => array(
         'display' => true,
-		'text' => 'Báo Cáo Doanh Thu Theo Năm'
+		'text' => 'Tổng doanh thu theo năm'
       ),
       'scales' => [
         'xAxes' => [

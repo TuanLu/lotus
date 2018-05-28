@@ -33,6 +33,12 @@ $container['ImportController'] = function ($c) {
 $container['ReportController'] = function ($c) {
   return new \App\Controllers\ReportController($c);
 };
+$container['ReportByProvinceController'] = function ($c) {
+  return new \App\Controllers\ReportByProvinceController($c);
+};
+$container['StoreController'] = function ($c) {
+  return new \App\Controllers\StoreController($c);
+};
 
 // Get an instance of Slim.
 $app = new \Slim\App($container);
