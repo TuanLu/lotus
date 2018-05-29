@@ -50,6 +50,13 @@ class StoreController extends BaseController {
         'message' => 'Dữ liệu đã được cập nhật',
         'data' => $params
       );
+      if(is_array($result)) {
+        //New record
+        $rsData['data'] = $result;
+        $rsData['newRecord'] = true;
+      } else {
+        $rsData['data'] = $params;
+      }
     }
     $response->getBody()->write(json_encode($rsData));
     return $response->withHeader('Content-type', 'application/json');

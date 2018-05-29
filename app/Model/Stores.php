@@ -41,15 +41,18 @@ class Stores {
       //General New Store ID
       $uuid1 = Uuid::uuid1();
       $uuid = $uuid1->toString();
-      $result = $this->db->insert('nha_thuoc', [
+      $storeData = [
         'store_id' => $uuid,
         'name' => $data['name'],
         'address' => $data['address'],
         'phone' => $data['phone'],
         'owner' => $data['owner'],
         'district_id' => $data['district_id'],
-      ]);
-      return $result->rowCount();
+      ];
+      $result = $this->db->insert('nha_thuoc', $storeData);
+      if($result->rowCount()) {
+        return $storeData;
+      }
     }
   }
   public function deleteStore($storeId) {
