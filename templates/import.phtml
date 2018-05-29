@@ -6,6 +6,33 @@
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/semantic/semantic.min.css">
     <link rel="stylesheet" href="https://unpkg.com/react-table@latest/react-table.css">
+    <style>
+      .order-add-form .ReactTable .rt-td {
+        overflow: visible;
+      }
+      .order-add-form .results.visible {
+        max-height: 300px;
+        overflow: scroll;
+      }
+      .order-add-form .visible.dropdown {
+        z-index: 20000!important;  
+      }
+      .order-add-form .header {
+        background-image: none;
+      }
+      .order-add-form .store-item.error .ui input {
+        border: 1px solid #F44336;
+      }
+      .order-add-form .file-upload {
+        position: absolute;
+        height: 50px;
+        z-index: 0;
+      }
+      .order-add-form .file-upload input {
+        opacity: 0; 
+        height: 50px;
+      }
+    </style>
   </head>
   <body>
     <div id="isd_app"></div>

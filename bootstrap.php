@@ -39,6 +39,9 @@ $container['ReportByProvinceController'] = function ($c) {
 $container['StoreController'] = function ($c) {
   return new \App\Controllers\StoreController($c);
 };
+$container['OrderController'] = function ($c) {
+  return new \App\Controllers\OrderController($c);
+};
 
 // Get an instance of Slim.
 $app = new \Slim\App($container);

@@ -58,9 +58,24 @@ class ImportController extends BaseController {
           try {
             $helper = new \App\Helper\Data();
             $data = $helper->readExcel($target_file);
-            $resStatus['status'] = 'success';
-            $resStatus['message'] = "The file ". $filename. " has been uploaded.";
-            $resStatus['data'] = $data;
+            if(!empty($data)) {
+              $orderData = array();
+              foreach($data as $order) {
+                $orderData[] = array(
+                  'store_id' => isset($order['A']) ? $order['A'] : '',
+                  'product_id' => isset($order['B']) ? $order['B'] : '',
+                  'delivery_id' => isset($order['C']) ? $order['C'] : '',
+                  'date' => isset($order['D']) ? $order['D'] : '',
+                  'qty' => isset($order['E']) ? $order['E'] : '',
+                  'price' => isset($order['F']) ? $order['F'] : '',
+                  'unit' => isset($order['G']) ? $order['G'] : '',
+                );
+              }
+              $resStatus['status'] = 'success';
+              $resStatus['message'] = "The file ". $filename. " has been uploaded.";
+              //Format orders data 
+              $resStatus['data'] = $orderData;
+            }
           }catch(Exception $e) {
             $resStatus['message'] = "Xin lỗi! Server không thể đọc được file excel này: $filename!";
           }

@@ -33,3 +33,6 @@ $app->get('/stores', 'StoreController:index');
 $app->get('/storeslocation', 'StoreController:location');
 $app->post('/updatestore', 'StoreController:updatestore');
 $app->delete('/deletestore/{id}', 'StoreController:deletestore');
+$app->get('/orders', 'OrderController:index');
+$app->get('/importOrderData', 'OrderController:importOrderData');
+$app->post('/addorders', 'OrderController:addorders');
