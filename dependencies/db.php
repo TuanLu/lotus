@@ -21,7 +21,8 @@ $container['db'] = function ($c) {
         'server' => $dbconfig['host'],
         'username' => $dbconfig['username'],
         'password' => $dbconfig['password'],
-        'logging' => true
+        'logging' => true,
+        'charset' => 'utf8',
     ]);
     return $db;
 };
