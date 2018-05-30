@@ -68,7 +68,10 @@ class ReportController extends BaseController {
     echo json_encode($reportData);
   }
   public function chart($request, $response) {
-    $data = [];
+    $uri = $request->getUri();
+    $data = [
+      'base_url' => $uri->getBaseUrl()
+    ];
     return $this->view->render($response, 'chart.phtml', $data);
   }
   public function product($request, $response) {
