@@ -25,14 +25,16 @@ class OrderController extends BaseController {
       'message' => 'Dữ liệu chưa được thêm thành công',
     );
     $params = $request->getParams();
-    $order = new Orders($this->db);
-    $result = $order->addOrders($params);
-    if($result) {
-      $rsData = array(
-        'status' => 'success',
-        'message' => 'Dữ liệu đã được thêm thành công',
-        'data' => $result
-      );
+    if(!empty($params)) {
+      $order = new Orders($this->db);
+      $result = $order->addOrders($params);
+      if($result) {
+        $rsData = array(
+          'status' => 'success',
+          'message' => 'Dữ liệu đã được thêm thành công',
+          'data' => $result
+        );
+      } 
     }
     $response->getBody()->write(json_encode($rsData));
     return $response->withHeader('Content-type', 'application/json');

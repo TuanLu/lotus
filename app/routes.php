@@ -36,3 +36,5 @@ $app->delete('/deletestore/{id}', 'StoreController:deletestore');
 $app->get('/orders', 'OrderController:index');
 $app->get('/importOrderData', 'OrderController:importOrderData');
 $app->post('/addorders', 'OrderController:addorders');
+$app->get('/plan', 'PlanController:index');
+$app->post('/updateplan', 'PlanController:updateplan');

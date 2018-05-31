@@ -42,6 +42,9 @@ $container['StoreController'] = function ($c) {
 $container['OrderController'] = function ($c) {
   return new \App\Controllers\OrderController($c);
 };
+$container['PlanController'] = function ($c) {
+  return new \App\Controllers\PlanController($c);
+};
 
 // Get an instance of Slim.
 $app = new \Slim\App($container);

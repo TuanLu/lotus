@@ -42,21 +42,23 @@ class StoreController extends BaseController {
       'message' => 'Dữ liệu chưa được cập nhật thành công',
     );
     $params = $request->getParams();
-    $store = new Stores($this->db);
-    $result = $store->updateStore($params);
-    if($result) {
-      $rsData = array(
-        'status' => 'success',
-        'message' => 'Dữ liệu đã được cập nhật',
-        'data' => $params
-      );
-      if(is_array($result)) {
-        //New record
-        $rsData['data'] = $result;
-        $rsData['newRecord'] = true;
-      } else {
-        $rsData['data'] = $params;
-      }
+    if(!empty($params)) {
+      $store = new Stores($this->db);
+      $result = $store->updateStore($params);
+      if($result) {
+        $rsData = array(
+          'status' => 'success',
+          'message' => 'Dữ liệu đã được cập nhật',
+          'data' => $params
+        );
+        if(is_array($result)) {
+          //New record
+          $rsData['data'] = $result;
+          $rsData['newRecord'] = true;
+        } else {
+          $rsData['data'] = $params;
+        }
+      }  
     }
     $response->getBody()->write(json_encode($rsData));
     return $response->withHeader('Content-type', 'application/json');

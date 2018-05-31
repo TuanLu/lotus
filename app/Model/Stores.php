@@ -1,6 +1,6 @@
 <?php 
 namespace App\Model;
-use \Ramsey\Uuid\Uuid;
+//use \Ramsey\Uuid\Uuid;
 
 class Stores {
   protected $db;
@@ -39,10 +39,14 @@ class Stores {
       return $result->rowCount();
     } else {
       //General New Store ID
-      $uuid1 = Uuid::uuid1();
-      $uuid = $uuid1->toString();
+      //$uuid1 = Uuid::uuid1();
+      //$uuid = $uuid1->toString();
+      $lastIdArr = $this->db->select('store_last_id', ['number','prefix'], ['id' => 1]);
+      $lastStoreNumber = $lastIdArr[0]['number'];
+      //$lastStoreNumber += 1;
+      $storeIdPrefix = $lastIdArr[0]['prefix'];
       $storeData = [
-        'store_id' => $uuid,
+        'store_id' => $storeIdPrefix . $lastStoreNumber,
         'name' => $data['name'],
         'address' => $data['address'],
         'phone' => $data['phone'],
@@ -51,6 +55,7 @@ class Stores {
       ];
       $result = $this->db->insert('nha_thuoc', $storeData);
       if($result->rowCount()) {
+        $this->db->update('store_last_id', ['number' => $lastStoreNumber + 1],['id' => 1]);
         return $storeData;
       }
     }

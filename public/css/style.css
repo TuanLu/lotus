@@ -123,6 +123,7 @@
     color: #FFF;
 }
 .isd_main {
+    min-height: 100vh;
     grid-area: main;
     background: #006666;
     display: grid;
@@ -208,6 +209,9 @@
     color:#000033;
     font-size: 18px;
     padding: 20px 0 14px 0;
+}
+#isd_app .main_content_left {
+  background: none;
 }
 .main_content_left {
   background: #FFF;
