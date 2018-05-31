@@ -1,5 +1,6 @@
 <?php 
 namespace App\Controllers;
+use \App\Helper\Data;
 
 class ImportController extends BaseController {
   const MAX_UPLOAD_FILESIZE = 20000000;//20M
@@ -60,16 +61,32 @@ class ImportController extends BaseController {
             $helper = new \App\Helper\Data();
             $data = $helper->readExcel($target_file);
             if(!empty($data)) {
+              //Load district to compare 
+              if(!isset($_SESSION['districtList'])) {
+                $districtSQL = "SELECT district.code as 'district_id', CONCAT(district.name,'-', provinces.name) as 'title', district.name as 'huyen' FROM district LEFT JOIN provinces ON district.parent_code = provinces.code ORDER BY huyen";
+                $districtData = $this->db->query($districtSQL)->fetchAll(\PDO::FETCH_ASSOC);
+                $_SESSION['districtList'] = $districtData;
+              }
+              $districtList = $_SESSION['districtList'];
               $orderData = array();
               foreach($data as $order) {
+                //Find district for this order info 
+                $sourceText = isset($order['B']) ? $order['B'] : '';
+                $helper = new Data();
+                $district = $helper->findDistrict($sourceText, $districtList);
+
                 $orderData[] = array(
-                  'store_id' => isset($order['A']) ? $order['A'] : '',
-                  'product_id' => isset($order['B']) ? $order['B'] : '',
-                  'delivery_id' => isset($order['C']) ? $order['C'] : '',
-                  'date' => isset($order['D']) ? $order['D'] : '',
-                  'qty' => isset($order['E']) ? $order['E'] : '',
-                  'price' => isset($order['F']) ? $order['F'] : '',
-                  'unit' => isset($order['G']) ? $order['G'] : '',
+                  'store_id' => '',
+                  'name' => isset($order['A']) ? $order['A'] : '',
+                  'address' => isset($order['B']) ? $order['B'] : '',
+                  'product_id' => isset($order['C']) ? $order['C'] : '',
+                  'delivery_id' => isset($order['D']) ? $order['D'] : '',
+                  'date' => isset($order['E']) ? $order['E'] : '',
+                  'qty' => isset($order['F']) ? $order['F'] : '',
+                  'price' => isset($order['G']) ? $order['G'] : '',
+                  'unit' => isset($order['H']) ? $order['H'] : '',
+                  'district_id' => !empty($district) ? $district['district_id'] : '',
+                  'district_name' => !empty($district) ? $district['huyen'] : '',
                 );
               }
               $resStatus['status'] = 'success';

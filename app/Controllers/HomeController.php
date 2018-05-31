@@ -8,8 +8,8 @@ class HomeController extends BaseController {
     $helper = new \App\Helper\Data();
     $data = $helper->readExcel($this->baseDir() . 'resource/BanDonHangFormatChuan.xlsx');
     //Load district to compare 
-    $districtSQL = "SELECT district.code as 'district_id', CONCAT(district.name,'-', provinces.name) as 'title', district.name as 'huyen' FROM district LEFT JOIN provinces ON district.parent_code = provinces.code ORDER BY huyen";
     if(!isset($_SESSION['districtList'])) {
+      $districtSQL = "SELECT district.code as 'district_id', CONCAT(district.name,'-', provinces.name) as 'title', district.name as 'huyen' FROM district LEFT JOIN provinces ON district.parent_code = provinces.code ORDER BY huyen";
       $districtData = $this->db->query($districtSQL)->fetchAll(\PDO::FETCH_ASSOC);
       $_SESSION['districtList'] = $districtData;
     }

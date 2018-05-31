@@ -33,4 +33,31 @@ class Data {
     }
     return [];
   }
+  public function findDistrict($sourceText, $districtList) {
+    if($sourceText != "") {
+      $sourceText = strtolower($sourceText);
+      //Remove space 
+      $sourceText = str_replace(' ', '', $sourceText);
+      $districtTemp = '';
+      $foundArr = [];
+      foreach($districtList as $district) {
+        $districtTemp = strtolower($district['huyen']);
+        //replace 'huyen', 'quan', 'thanhpho' => ''
+        $districtTemp = str_replace('thành phố', '', $districtTemp);
+        $districtTemp = str_replace('quận', '', $districtTemp);
+        $districtTemp = str_replace('huyện', '', $districtTemp);
+        $districtTemp = str_replace(' ', '', $districtTemp);
+        //Special string Quận 1 -> 12 
+        if(is_numeric($districtTemp)) {
+          $districtTemp = 'quận' . $districtTemp;
+        }
+        if(strpos($sourceText, $districtTemp)) {
+          $foundArr[] = $district;
+        }
+      }
+      if(count($foundArr) == 1) {        
+        return $foundArr[0];
+      }
+    }
+  }
 }

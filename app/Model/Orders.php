@@ -71,16 +71,22 @@ class Orders {
     $productSQL = "SELECT product_id, name FROM products";
     $storeSQL = "SELECT store_id, CONCAT(store_id, '-', name) as 'title', address, district_id, name FROM nha_thuoc";
     $deliverySQL = "SELECT delivery_id,name FROM delivery";
-    $districtSQL = "SELECT district.code as 'district_id', CONCAT(district.name,'-', provinces.name) as 'title', district.name as 'huyen' FROM district LEFT JOIN provinces ON district.parent_code = provinces.code ORDER BY huyen";
+    //Load district to compare 
+    if(!isset($_SESSION['districtList'])) {
+      $districtSQL = "SELECT district.code as 'district_id', CONCAT(district.name,'-', provinces.name) as 'title', district.name as 'huyen' FROM district LEFT JOIN provinces ON district.parent_code = provinces.code ORDER BY huyen";
+      $districtData = $this->db->query($districtSQL)->fetchAll(\PDO::FETCH_ASSOC);
+      $_SESSION['districtList'] = $districtData;
+    }
+    $districtList = $_SESSION['districtList'];
     $productData = $this->db->query($productSQL)->fetchAll(\PDO::FETCH_ASSOC);
     $storeData = $this->db->query($storeSQL)->fetchAll(\PDO::FETCH_ASSOC);
     $deliveryData = $this->db->query($deliverySQL)->fetchAll(\PDO::FETCH_ASSOC);
-    $districtData = $this->db->query($districtSQL)->fetchAll(\PDO::FETCH_ASSOC);
+    //$districtData = $this->db->query($districtSQL)->fetchAll(\PDO::FETCH_ASSOC);
     return array(
       'products' => $productData,
       'stores' => $storeData,
       'deliveries' => $deliveryData,
-      'districts' => $districtData
+      'districts' => $districtList
     );
   }
 }
