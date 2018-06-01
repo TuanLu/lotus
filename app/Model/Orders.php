@@ -29,7 +29,6 @@ class Orders {
         return false;
       }
       if($data[$i]['store_id'] == '') {
-        //$lastStoreNumber += 1;
         $newStoreId = $lastIdArr[0]['prefix'] . $lastStoreNumber;
         $newStores[] = [
           "store_id" => $newStoreId,
@@ -38,6 +37,8 @@ class Orders {
           "district_id" => $data[$i]['district_id'],
         ];
         $data[$i]['store_id'] = $newStoreId;
+        //Increment last store number
+        $lastStoreNumber += 1;
       }
       //Convert date to MYSQL date format 
       $data[$i]['date'] = $helper->convertStringToDate('d/m/Y', $data[$i]['date']);
