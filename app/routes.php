@@ -22,11 +22,11 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //   $this->renderer->render($response, "home.phtml", $data);
 // });
 
-$app->get('/', 'HomeController:index');
+//$app->get('/', 'HomeController:index');
 $app->get('/import', 'ImportController:index');
 $app->post('/upload', 'ImportController:upload');
 $app->get('/report', 'ReportController:index');
-$app->get('/chart', 'ReportController:chart');
+$app->get('/', 'ReportController:chart');
 $app->get('/product', 'ReportController:product');
 $app->get('/reportbyprovince', 'ReportByProvinceController:index');
 $app->get('/stores', 'StoreController:index');
