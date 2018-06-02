@@ -65,4 +65,8 @@ class Stores {
     ]);
     return $result->rowCount();
   }
+  public function checkExistsStores($inString) {
+    $sql = "SELECT title, store_id FROM (SELECT store_id, REPLACE(LOWER(CONCAT(name,address)), ' ','') AS title  FROM nha_thuoc) as stores WHERE title IN ($inString)";
+    return $data = $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+  }
 }

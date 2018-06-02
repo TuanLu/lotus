@@ -58,7 +58,7 @@ class Orders {
         $result = $this->db->insert('nha_thuoc', $newStores);
         //update $lastStoreNumber
         if($result->rowCount()) {
-          $this->db->update('store_last_id', ['number' => $lastStoreNumber + 1],['id' => 1]);
+          $this->db->update('store_last_id', ['number' => $lastStoreNumber],['id' => 1]);
         }
       }
       $result = $this->db->insert('orders', $newOrders);

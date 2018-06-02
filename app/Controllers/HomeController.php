@@ -3,14 +3,15 @@ namespace App\Controllers;
 use \Slim\Views\PhpRenderer;
 use \App\Helper\Data;
 use \App\Model\Plan;
+use \App\Model\Stores;
 
 class HomeController extends BaseController {
   public function index($request, $response) {
-    $plan = new Plan($this->db);
-    $data = $plan->getPlanPerWeek(2018);
-    echo "<pre>";
-    print_r($data);
-    die;
+//    $plan = new Plan($this->db);
+//    $data = $plan->getPlanPerWeek(2018);
+//    echo "<pre>";
+//    print_r($data);
+//    die;
     $helper = new \App\Helper\Data();
     $data = $helper->readExcel($this->baseDir() . 'resource/BanDonHangFormatChuan.xlsx');
     //Load district to compare 
@@ -21,12 +22,13 @@ class HomeController extends BaseController {
     }
     $districtList = $_SESSION['districtList'];
     $orderData = array();
+    $compareStoreNameAndAddress = [];
     foreach($data as $order) {
       //Find district for this order info 
       $sourceText = isset($order['B']) ? $order['B'] : '';
-      $district = $this->findDistrict($sourceText, $districtList);
+      $district = $helper->findDistrict($sourceText, $districtList);
       
-      $orderData[] = array(
+      $itemArr = array(
         'store_id' => '',
         'name' => isset($order['A']) ? $order['A'] : '',
         'address' => isset($order['B']) ? $order['B'] : '',
@@ -38,38 +40,41 @@ class HomeController extends BaseController {
         'unit' => isset($order['H']) ? $order['H'] : '',
         'district_id' => !empty($district) ? $district['district_id'] : '',
         'district_name' => !empty($district) ? $district['huyen'] : '',
+        'name_address' => ''
       );
+      
+      $nameAndAddress = $itemArr['name'] . $itemArr['address'];
+      if($nameAndAddress != "") {
+        //mb_strtolower FOR UTF-8 CODE
+        $textToLower = mb_strtolower($nameAndAddress, 'UTF-8');
+        $textTemp = str_replace(' ', '',$textToLower);
+        $compareStoreNameAndAddress[] = "'" . $textTemp . "'";  
+        $itemArr['name_address'] = $textTemp;
+      }
+      $orderData[] = $itemArr;
     }
+    //Load all stores exists in database 
+    $existsStore = [];
+    if(!empty($compareStoreNameAndAddress)) {
+      $store = new Stores($this->db);
+      $existsStore = $store->checkExistsStores(implode($compareStoreNameAndAddress, ','));
+    }
+    //If found exists store, then update store_id for that store
+    if(!empty($existsStore)) {
+      for($i = 0; $i < count($orderData); $i++) {
+        foreach($existsStore as $store) {
+          if($store['title'] == $orderData[$i]['name_address']) {
+            $orderData[$i]['store_id'] = $store['store_id'];
+          }
+        }
+      }
+    }
+//    echo "<pre>";
+//    print_r($orderData);
+//    die;
     echo json_encode($orderData);
     die;
     $data = [];
     return $this->view->render($response, 'home.phtml', $data);
-  }
-  protected function findDistrict($sourceText, $districtList) {
-    if($sourceText != "") {
-      $sourceText = strtolower($sourceText);
-      //Remove space 
-      $sourceText = str_replace(' ', '', $sourceText);
-      $districtTemp = '';
-      $foundArr = [];
-      foreach($districtList as $district) {
-        $districtTemp = strtolower($district['huyen']);
-        //replace 'huyen', 'quan', 'thanhpho' => ''
-        $districtTemp = str_replace('thành phố', '', $districtTemp);
-        $districtTemp = str_replace('quận', '', $districtTemp);
-        $districtTemp = str_replace('huyện', '', $districtTemp);
-        $districtTemp = str_replace(' ', '', $districtTemp);
-        //Special string Quận 1 -> 12 
-        if(is_numeric($districtTemp)) {
-          $districtTemp = 'quận' . $districtTemp;
-        }
-        if(strpos($sourceText, $districtTemp)) {
-          $foundArr[] = $district;
-        }
-      }
-      if(count($foundArr) == 1) {        
-        return $foundArr[0];
-      }
-    }
   }
 }

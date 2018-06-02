@@ -23,6 +23,9 @@
       .order-add-form .store-item.error .ui input {
         border: 1px solid #F44336;
       }
+      .order-add-form .store-exitst .ui input {
+        border: 1px solid #00B5AD;
+      }
       .order-add-form .file-upload {
         position: absolute;
         height: 50px;
@@ -51,9 +54,11 @@
       window.ISD_BASE_URL = '<?php echo $data['base_url'] ?>/';
       window.ISD_CURRENT_PAGE = '<?php echo isset($_GET['page'])? $_GET['page'] : ''  ?>';
     </script>
+<!--
     <script src="<?php echo $data['base_url'] ?>/js/vendors.min.js"></script>
     <script src="<?php echo $data['base_url'] ?>/js/lotusimport.min.js"></script>
-<!--    <script src="http://localhost:8080/public/ishopdesign.min.js"></script>-->
+-->
+    <script src="http://localhost:8080/public/ishopdesign.min.js"></script>
  
   </body>
 </html>

@@ -35,13 +35,13 @@ class Data {
   }
   public function findDistrict($sourceText, $districtList) {
     if($sourceText != "") {
-      $sourceText = strtolower($sourceText);
+      $sourceText = mb_strtolower($sourceText);
       //Remove space 
       $sourceText = str_replace(' ', '', $sourceText);
       $districtTemp = '';
       $foundArr = [];
       foreach($districtList as $district) {
-        $districtTemp = strtolower($district['huyen']);
+        $districtTemp = mb_strtolower($district['huyen']);
         //replace 'huyen', 'quan', 'thanhpho' => ''
         $districtTemp = str_replace('thành phố', '', $districtTemp);
         $districtTemp = str_replace('quận', '', $districtTemp);
