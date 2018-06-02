@@ -2,9 +2,15 @@
 namespace App\Controllers;
 use \Slim\Views\PhpRenderer;
 use \App\Helper\Data;
+use \App\Model\Plan;
 
 class HomeController extends BaseController {
   public function index($request, $response) {
+    $plan = new Plan($this->db);
+    $data = $plan->getPlanPerWeek(2018);
+    echo "<pre>";
+    print_r($data);
+    die;
     $helper = new \App\Helper\Data();
     $data = $helper->readExcel($this->baseDir() . 'resource/BanDonHangFormatChuan.xlsx');
     //Load district to compare 

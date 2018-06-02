@@ -1,5 +1,6 @@
 <?php 
 namespace App\Model;
+use \App\Model\Plan;
 
 class Chart {
   protected $db;
@@ -245,8 +246,11 @@ class Chart {
         'message' => 'Empty data!'
       );
     }
+    //Load plan data 
+    $plan = new Plan($this->db);
+    $planAmounts = $plan->getPlanPerWeek($year, $productId);
 //    echo "<pre>";
-//    print_r($data);
+//    print_r($planAmounts);
 //    die();
     $report = array();
     foreach($data as $quy) {
@@ -259,7 +263,7 @@ class Chart {
         [
           'label' => 'Mục tiêu',
           'type' => 'line',
-          'data' => [0,0,0,150,0,0,0,0,250,200,180,150,300,320,200,500,300,200,210,500,600],
+          'data' => $planAmounts,
           'fill' => false,
           'backgroundColor' => 'rgba(255, 99, 132, 1)',
           'borderColor' => '#ED6D85',

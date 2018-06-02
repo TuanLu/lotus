@@ -21,8 +21,25 @@ class PlanController extends BaseController {
     $response->getBody()->write(json_encode($rsData));
     return $response->withHeader('Content-type', 'application/json');
   }  
-  public function updateplan() {
-    
+  public function updateplan($request, $response) {
+    $rsData = array(
+      'status' => 'error',
+      'message' => 'Dữ liệu chưa được cập nhật thành công',
+    );
+    $params = $request->getParams();
+    if(!empty($params)) {
+      $plan = new Plan($this->db);
+      $result = $plan->updatePlan($params);
+      if($result) {
+        $rsData = array(
+          'status' => 'success',
+          'message' => 'Dữ liệu đã được thêm thành công',
+          'data' => $result
+        );
+      } 
+    }
+    $response->getBody()->write(json_encode($rsData));
+    return $response->withHeader('Content-type', 'application/json');
   }
   
 }

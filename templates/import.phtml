@@ -49,7 +49,7 @@
     <div id="isd_app"></div>
     <script>
       window.ISD_BASE_URL = '<?php echo $data['base_url'] ?>/';
-      window.ISD_CURRENT_PAGE = '<?php echo $_GET['page'] ?>';
+      window.ISD_CURRENT_PAGE = '<?php echo isset($_GET['page'])? $_GET['page'] : ''  ?>';
     </script>
     <script src="<?php echo $data['base_url'] ?>/js/vendors.min.js"></script>
     <script src="<?php echo $data['base_url'] ?>/js/lotusimport.min.js"></script>

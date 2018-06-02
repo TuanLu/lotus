@@ -24,7 +24,6 @@ class Stores {
   }
   public function updateStore($data) {
     if(isset($data['store_id']) && $data['store_id'] != "") {
-      echo "updaet mode";
       //Update mode
       $result = $this->db->update('nha_thuoc', [
         'store_id' => $data['store_id'],
