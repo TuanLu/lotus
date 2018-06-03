@@ -35,6 +35,7 @@ $app->get('/storeslocation', 'StoreController:location');
 $app->post('/updatestore', 'StoreController:updatestore');
 $app->get('/deletestore/{id}', 'StoreController:deletestore');//DELETE not allowed in http request
 $app->get('/orders', 'OrderController:index');
+$app->get('/deleteorder/{id}', 'OrderController:deleteorder');
 $app->get('/importOrderData', 'OrderController:importOrderData');
 $app->post('/addorders', 'OrderController:addorders');
 $app->get('/plan', 'PlanController:index');

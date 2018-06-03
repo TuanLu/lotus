@@ -46,7 +46,7 @@ class OrderController extends BaseController {
     );
     $id = $args['id'];
     $store = new Orders($this->db);
-    $result = $store->deleteStore($id);
+    $result = $store->deleteOrder($id);
     if($result) {
       $rsData = array(
         'status' => 'success',

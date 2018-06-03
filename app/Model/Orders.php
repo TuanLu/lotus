@@ -8,7 +8,7 @@ class Orders {
     $this->db = $db;
   }
   public function getOrders() {
-    $sql = "SELECT order_id, store_id, product_id, qty, price, date, unit  FROM orders ORDER BY date DESC";
+    $sql = "SELECT order_id, store_id, product_id, qty, price, date, unit, delivery_id  FROM orders ORDER BY date DESC";
     $data = $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     return $data;
   }
@@ -65,8 +65,11 @@ class Orders {
       return $result->rowCount();  
     }
   }
-  public function deleteOrder($storeId) {
-    
+  public function deleteOrder($orderId) {
+    $result = $this->db->delete('orders', [
+      'order_id' => $orderId
+    ]);
+    return $result->rowCount();
   }
   public function getPreOrderData() {
     $productSQL = "SELECT product_id, name FROM products";

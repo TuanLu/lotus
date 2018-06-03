@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers;
 use \App\Helper\Data;
+use \App\Model\Stores;
 
 class ImportController extends BaseController {
   const MAX_UPLOAD_FILESIZE = 20000000;//20M
@@ -69,13 +70,13 @@ class ImportController extends BaseController {
               }
               $districtList = $_SESSION['districtList'];
               $orderData = array();
+              $compareStoreNameAndAddress = [];
               foreach($data as $order) {
                 //Find district for this order info 
                 $sourceText = isset($order['B']) ? $order['B'] : '';
-                $helper = new Data();
                 $district = $helper->findDistrict($sourceText, $districtList);
 
-                $orderData[] = array(
+                $itemArr = array(
                   'store_id' => '',
                   'name' => isset($order['A']) ? $order['A'] : '',
                   'address' => isset($order['B']) ? $order['B'] : '',
@@ -87,12 +88,40 @@ class ImportController extends BaseController {
                   'unit' => isset($order['H']) ? $order['H'] : '',
                   'district_id' => !empty($district) ? $district['district_id'] : '',
                   'district_name' => !empty($district) ? $district['huyen'] : '',
+                  'name_address' => ''
                 );
+
+                $nameAndAddress = $itemArr['name'] . $itemArr['address'];
+                if($nameAndAddress != "") {
+                  //mb_strtolower FOR UTF-8 CODE
+                  $textToLower = mb_strtolower($nameAndAddress, 'UTF-8');
+                  $textTemp = str_replace(' ', '',$textToLower);
+                  $compareStoreNameAndAddress[] = "'" . $textTemp . "'";  
+                  $itemArr['name_address'] = $textTemp;
+                }
+                $orderData[] = $itemArr;
               }
-              $resStatus['status'] = 'success';
-              $resStatus['message'] = "The file ". $filename. " has been uploaded.";
+              //Load all stores exists in database 
+              $existsStore = [];
+              if(!empty($compareStoreNameAndAddress)) {
+                $store = new Stores($this->db);
+                $existsStore = $store->checkExistsStores(implode($compareStoreNameAndAddress, ','));
+              }
+              //If found exists store, then update store_id for that store
+              if(!empty($existsStore)) {
+                for($i = 0; $i < count($orderData); $i++) {
+                  foreach($existsStore as $store) {
+                    if($store['title'] == $orderData[$i]['name_address']) {
+                      $orderData[$i]['store_id'] = $store['store_id'];
+                    }
+                  }
+                }
+              }
               //Format orders data 
               $resStatus['data'] = $orderData;
+              $resStatus['status'] = "success";
+              $resStatus['message'] = "Upload file thành công!";
+              
             }
           }catch(Exception $e) {
             $resStatus['message'] = "Xin lỗi! Server không thể đọc được file excel này: $filename!";
