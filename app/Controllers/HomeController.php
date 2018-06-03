@@ -29,6 +29,7 @@ class HomeController extends BaseController {
       $district = $helper->findDistrict($sourceText, $districtList);
       
       $itemArr = array(
+        'order_id' => '',
         'store_id' => '',
         'name' => isset($order['A']) ? $order['A'] : '',
         'address' => isset($order['B']) ? $order['B'] : '',

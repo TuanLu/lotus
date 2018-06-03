@@ -21,36 +21,53 @@ class Orders {
     $newStores = [];
     $newOrders = [];
     $lastStoreNumber = $lastIdArr[0]['number'];
+    $updateCount = 0;
     for($i = 0; $i < count($data); $i++) {
-      //Valid date before add order 
-      if(!isset($data[$i]['product_id']) || $data[$i]['product_id'] == ''
-        || !isset($data[$i]['date']) || $data[$i]['date'] == '') {
-        $isOk = false;
-        return false;
-      }
-      if($data[$i]['store_id'] == '') {
-        $newStoreId = $lastIdArr[0]['prefix'] . $lastStoreNumber;
-        $newStores[] = [
-          "store_id" => $newStoreId,
-          "name" => $data[$i]['name'],
-          "address" => $data[$i]['address'],
-          "district_id" => $data[$i]['district_id'],
+      if(isset($data[$i]['order_id']) && $data[$i]['order_id'] != '') {
+        //Edit order
+        //Convert date to MYSQL date format 
+        $data[$i]['date'] = $helper->convertStringToDate('d/m/Y', $data[$i]['date']);
+        $result = $this->db->update('orders', [
+          "store_id" => $data[$i]['store_id'],
+          "date" => $data[$i]['date'],
+          "product_id" => $data[$i]['product_id'],
+          "delivery_id" => $data[$i]['delivery_id'],
+          "qty" => $data[$i]['qty'],
+          "price" => $data[$i]['price'],
+          "unit" => $data[$i]['unit'],
+        ], ['order_id' => $data[$i]['order_id']]);
+        $updateCount = $result->rowCount();
+      } else {
+        //New order mode
+        if(!isset($data[$i]['product_id']) || $data[$i]['product_id'] == ''
+          || !isset($data[$i]['date']) || $data[$i]['date'] == '') {
+          $isOk = false;
+          return false;
+        }
+        if($data[$i]['store_id'] == '') {
+          $newStoreId = $lastIdArr[0]['prefix'] . $lastStoreNumber;
+          $newStores[] = [
+            "store_id" => $newStoreId,
+            "name" => $data[$i]['name'],
+            "address" => $data[$i]['address'],
+            "district_id" => $data[$i]['district_id'],
+          ];
+          $data[$i]['store_id'] = $newStoreId;
+          //Increment last store number
+          $lastStoreNumber += 1;
+        }
+        //Convert date to MYSQL date format 
+        $data[$i]['date'] = $helper->convertStringToDate('d/m/Y', $data[$i]['date']);
+        $newOrders[] = [
+          "store_id" => $data[$i]['store_id'],
+          "date" => $data[$i]['date'],
+          "product_id" => $data[$i]['product_id'],
+          "delivery_id" => $data[$i]['delivery_id'],
+          "qty" => $data[$i]['qty'],
+          "price" => $data[$i]['price'],
+          "unit" => $data[$i]['unit'],
         ];
-        $data[$i]['store_id'] = $newStoreId;
-        //Increment last store number
-        $lastStoreNumber += 1;
       }
-      //Convert date to MYSQL date format 
-      $data[$i]['date'] = $helper->convertStringToDate('d/m/Y', $data[$i]['date']);
-      $newOrders[] = [
-        "store_id" => $data[$i]['store_id'],
-        "date" => $data[$i]['date'],
-        "product_id" => $data[$i]['product_id'],
-        "delivery_id" => $data[$i]['delivery_id'],
-        "qty" => $data[$i]['qty'],
-        "price" => $data[$i]['price'],
-        "unit" => $data[$i]['unit'],
-      ];
     }
     if($isOk) {
       //If there are any new store, then create stores first 
@@ -61,9 +78,12 @@ class Orders {
           $this->db->update('store_last_id', ['number' => $lastStoreNumber],['id' => 1]);
         }
       }
-      $result = $this->db->insert('orders', $newOrders);
-      return $result->rowCount();  
+      if(!empty($newOrders)) {
+        $result = $this->db->insert('orders', $newOrders);
+        return $result->rowCount();  
+      }
     }
+    return $updateCount;
   }
   public function deleteOrder($orderId) {
     $result = $this->db->delete('orders', [
