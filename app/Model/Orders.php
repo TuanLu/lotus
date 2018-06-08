@@ -8,7 +8,7 @@ class Orders {
     $this->db = $db;
   }
   public function getOrders() {
-    $sql = "SELECT order_id, store_id, product_id, qty, price, date, unit, delivery_id  FROM orders ORDER BY date DESC";
+    $sql = "SELECT order_id, store_id, product_id, qty, price, date, unit, delivery_id,tdv  FROM orders ORDER BY date DESC";
     $data = $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     return $data;
   }
@@ -35,6 +35,7 @@ class Orders {
           "qty" => $data[$i]['qty'],
           "price" => $data[$i]['price'],
           "unit" => $data[$i]['unit'],
+          "tdv" => $data[$i]['tdv'],
         ], ['order_id' => $data[$i]['order_id']]);
         $updateCount = $result->rowCount();
       } else {
@@ -66,6 +67,7 @@ class Orders {
           "qty" => $data[$i]['qty'],
           "price" => $data[$i]['price'],
           "unit" => $data[$i]['unit'],
+          "tdv" => $data[$i]['tdv'],
         ];
       }
     }

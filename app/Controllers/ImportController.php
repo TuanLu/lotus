@@ -87,6 +87,7 @@ class ImportController extends BaseController {
                   'qty' => isset($order['F']) ? $order['F'] : '',
                   'price' => isset($order['G']) ? $order['G'] : '',
                   'unit' => isset($order['H']) ? $order['H'] : '',
+                  'tdv' => isset($order['I']) ? $order['I'] : '',
                   'district_id' => !empty($district) ? $district['district_id'] : '',
                   'district_name' => !empty($district) ? $district['huyen'] : '',
                   'name_address' => ''

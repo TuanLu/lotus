@@ -21,6 +21,13 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //   ]);
 //   $this->renderer->render($response, "home.phtml", $data);
 // });
+$app->post('/token', 'UserController:token');
+$app->get('/fetchRoles', 'UserController:fetchRoles');//Per User
+$app->get('/fetchAllRoles', 'UserController:fetchAllRoles');// To assign to user
+
+$app->get('/users/fetchUsers', 'UserController:fetchUsers');
+$app->post('/users/updateUser', 'UserController:updateUser');
+$app->get('/users/deleteUser/{id}', 'UserController:deleteUser');
 
 $app->get('/test', 'HomeController:index');
 $app->get('/import', 'ImportController:index');
