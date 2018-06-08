@@ -325,3 +325,29 @@
 .bangdonvitinh > div {
     grid-template-columns: 25% 15% 15% 15%;
 }
+#isd_app .isd-login-form {
+    width: 330px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(#0e2696, #00BCD4);
+    padding: 10px 23px;
+    border-radius: 10px;
+    -webkit-box-shadow: 3px 4px 3px 0px rgba(158, 154, 158, 0.82);
+    -moz-box-shadow: 3px 4px 3px 0px rgba(158, 154, 158, 0.82);
+    box-shadow: 3px 4px 3px 0px rgba(158, 154, 158, 0.82);
+}
+#isd_app .isd-login-form img {
+    width: 100%;
+}
+#isd_app .login-logo {
+    margin-bottom: 30px;
+}
+#isd_app .isd-login-form button {
+    background-color: #A22059;
+    width: 100%;
+}
+#isd_app .isd-login-form .ui.form label {
+    color: #fff;
+}
