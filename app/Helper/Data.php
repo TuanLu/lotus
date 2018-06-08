@@ -51,7 +51,7 @@ class Data {
         if(is_numeric($districtTemp)) {
           $districtTemp = 'quận' . $districtTemp;
         }
-        if(strpos($sourceText, $districtTemp)) {
+        if(strpos($sourceText, $districtTemp) !== false) {
           $foundArr[] = $district;
         }
       }
