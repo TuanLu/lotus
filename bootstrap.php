@@ -18,6 +18,10 @@ $settings = require 'config/app.php';
 
 
 $container = new \Slim\Container($settings);
+//Access to token
+$container["jwt"] = function ($container) {
+  return new StdClass;
+};
 // view renderer
 $container['view'] = function ($c) {
   $settings = $c->get('settings')['renderer'];
@@ -26,6 +30,9 @@ $container['view'] = function ($c) {
 
 $container['HomeController'] = function ($c) {
   return new \App\Controllers\HomeController($c);
+};
+$container['UserController'] = function ($c) {
+  return new \App\Controllers\UserController($c);
 };
 $container['ImportController'] = function ($c) {
   return new \App\Controllers\ImportController($c);
