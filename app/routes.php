@@ -52,3 +52,7 @@ $app->post('/updateplan', 'PlanController:updateplan');
 $app->get('/product/fetchProducts', 'ProductController:fetchProducts');
 $app->post('/product/updateProduct', 'ProductController:updateProduct');
 $app->get('/product/deleteProduct/{id}', 'ProductController:deleteProduct');
+//TDV routers
+$app->get('/tdv/fetchTdvs', 'TdvController:fetchTdvs');
+$app->post('/tdv/updateTdv', 'TdvController:updateTdv');
+$app->get('/tdv/deleteTdv/{id}', 'TdvController:deleteTdv');
