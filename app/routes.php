@@ -56,3 +56,7 @@ $app->get('/product/deleteProduct/{id}', 'ProductController:deleteProduct');
 $app->get('/tdv/fetchTdvs', 'TdvController:fetchTdvs');
 $app->post('/tdv/updateTdv', 'TdvController:updateTdv');
 $app->get('/tdv/deleteTdv/{id}', 'TdvController:deleteTdv');
+//Đơn vị tính routers
+$app->get('/exchange/fetchExchange', 'ExchangeController:fetchExchange');
+$app->post('/exchange/updateExchange', 'ExchangeController:updateExchange');
+$app->get('/exchange/deleteExchange/{id}', 'ExchangeController:deleteExchange');
