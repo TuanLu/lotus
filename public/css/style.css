@@ -6,10 +6,10 @@
     padding: 0; 
     margin: 0;
     font-family: "Roboto";
-    -webkit-transition: all .6s;
+    /* -webkit-transition: all .6s;
     -moz-transition: all .6s;
     -o-transition: all .6s;
-    transition: all .6s;
+    transition: all .6s; */
     font-size: 14px;
 }
 .header { 
@@ -208,7 +208,7 @@
 .main_content h2 {
     color:#000033;
     font-size: 18px;
-    padding: 20px 0 14px 0;
+    padding: 8px 0 8px 0;
 }
 #isd_app .main_content_left {
   background: none;
@@ -325,7 +325,7 @@
 .bangdonvitinh > div {
     grid-template-columns: 25% 15% 15% 15%;
 }
-#isd_app .isd-login-form {
+/* #isd_app .isd-login-form {
     width: 330px;
     position: absolute;
     top: 50%;
@@ -350,4 +350,141 @@
 }
 #isd_app .isd-login-form .ui.form label {
     color: #fff;
+} */
+.login-wrapper {
+    width: 330px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(#0e2696, #00BCD4);
+    padding: 10px 23px;
+    border-radius: 10px;
+    -webkit-box-shadow: 3px 4px 3px 0px rgba(158, 154, 158, 0.82);
+    -moz-box-shadow: 3px 4px 3px 0px rgba(158, 154, 158, 0.82);
+    box-shadow: 3px 4px 3px 0px rgba(158, 154, 158, 0.82);
+  }
+  .login-form button.login-form-button {
+    background: #A22059;
+    color: #fff;
+    border: none;
+    font-weight: 700;
+    width: 100%;
+  }
+  .login-form .ant-form-item {
+    margin-bottom: 10px;
+  }
+  .login-form .ant-form-item-control {
+    text-align: center;
+  }
+  .login-logo {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .login-logo img {
+    display: block;
+    width: 100%;
+  }
+.order-add-form .ReactTable .rt-td {
+    overflow: visible;
+}
+.order-add-form .results.visible {
+  max-height: 300px;
+  overflow: scroll;
+}
+.order-add-form .visible.dropdown {
+  z-index: 20000!important;  
+}
+.order-add-form .header {
+  background-image: none;
+}
+.order-add-form .store-item.error .ui input {
+  border: 1px solid #F44336;
+}
+.order-add-form .store-exitst .ui input {
+  border: 1px solid #00B5AD;
+}
+.order-add-form .file-upload {
+  position: absolute;
+  height: 50px;
+  z-index: 0;
+  width: 100%;
+}
+.order-add-form .file-upload input {
+  opacity: 0; 
+  height: 50px;
+  width: 100%;
+}
+.order-add-form .editable-input {
+  overflow: auto; 
+}
+.order-add-form .ui.icon.input input {
+  padding-right: 0;
+}
+.order-add-form .ui.input input {
+  padding: 4px;
+}
+.header .header_center h2{
+  color: #fff;
+}
+#components-layout-demo-custom-trigger .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color .3s;
+}
+
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
+}
+
+#components-layout-demo-custom-trigger .logo {
+  height: 32px;
+  background: rgba(255,255,255,.2);
+  margin: 16px;
+}
+.editable-cell {
+  position: relative;
+}
+
+.editable-cell-icon,
+.editable-cell-icon-check {
+  cursor: pointer;
+}
+
+.editable-cell-icon {
+  line-height: 14px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -7px;
+  display: none;
+}
+
+td:hover .editable-cell-icon {
+  display: inline-block;
+}
+
+.editable-cell-icon:hover,
+.editable-cell-icon-check:hover {
+  color: #108ee9;
+}
+.table-operations {
+  margin-bottom: 10px;
+}
+.table-operations .action-btns {
+  text-align: right;
+}
+.table-operations .head-title {
+  text-transform: uppercase;
+  text-align: left;
+  padding-left: 12px;
+}
+.ant-table-wrapper {
+  max-width: 980px;
+  min-height: 80vh;
+}
+#isd_app .ant-layout {
+  padding: 10px;
 }

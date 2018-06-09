@@ -47,3 +47,8 @@ $app->get('/importOrderData', 'OrderController:importOrderData');
 $app->post('/addorders', 'OrderController:addorders');
 $app->get('/plan', 'PlanController:index');
 $app->post('/updateplan', 'PlanController:updateplan');
+
+//Product routers
+$app->get('/product/fetchProducts', 'ProductController:fetchProducts');
+$app->post('/product/updateProduct', 'ProductController:updateProduct');
+$app->get('/product/deleteProduct/{id}', 'ProductController:deleteProduct');
