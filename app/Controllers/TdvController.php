@@ -17,6 +17,7 @@ class TdvController extends BaseController
 		// Columns to select.
 		$columns = [
 				'id',
+				'ma_tdv',
 				'name',
 				'address',
 				'phone',
@@ -41,12 +42,18 @@ class TdvController extends BaseController
 		// Get params and validate them here.
 		//$params = $request->getParams();
 		$id = $request->getParam('id');
+		$maTdv = $request->getParam('ma_tdv');
 		$name = $request->getParam('name');
 		$address = $request->getParam('address');
 		$phone = $request->getParam('phone');
 		$company = $request->getParam('company');
 		if(!$id) {
 			//Insert new data to db
+			if(!$maTdv) {
+				$rsData['message'] = 'Mã trình dược viên không được để trống!';
+				echo json_encode($rsData);
+				die;
+			}
 			if(!$name) {
 				$rsData['message'] = 'Tên trình dược viên không được để trống!';
 				echo json_encode($rsData);
@@ -54,12 +61,20 @@ class TdvController extends BaseController
 			}
 			$date = new \DateTime();
 			$itemData = [
+				'ma_tdv' => $maTdv,
 				'name' => $name,
 				'address' => $address,
 				'phone' => $phone,
 				'company' => $company,
 				'create_on' => $date->format('Y-m-d H:i:s'),
 			];
+			$selectColumns = ['id', 'ma_tdv'];
+			$where = ['ma_tdv' => $itemData['ma_tdv']];
+			$data = $this->db->select($this->tableName, $selectColumns, $where);
+			if(!empty($data)) {
+				$rsData['message'] = "Mã trình dược viên [". $itemData['ma_tdv'] ."] đã tồn tại: ";
+				echo json_encode($rsData);exit;
+			}
 			$result = $this->db->insert($this->tableName, $itemData);
 			
 			if($result->rowCount()) {
@@ -74,6 +89,7 @@ class TdvController extends BaseController
 			//update data base on $id
 			$date = new \DateTime();
 			$itemData = [
+				'ma_tdv' => $maTdv,
 				'name' => $name,
 				'address' => $address,
 				'phone' => $phone,
