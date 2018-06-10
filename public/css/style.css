@@ -127,10 +127,6 @@
     grid-area: main;
     background: #006666;
     display: grid;
-    grid-template-areas: 
-        '. center  .'
-        '. left right';
-    grid-template-columns: auto minmax(max-content, 980px);
 /*    grid-template-rows: 60px auto;*/
     grid-gap: 20px;
 /*    padding: 20px 0;*/
@@ -187,8 +183,10 @@
 .main_content {
     grid-area: left;
     display: grid;
-    grid-column: 2 / span 1;
     grid-gap: 20px;
+    grid-column: 1;
+    margin: 20px;
+    grid-row: 1;
 }
 .filter_time {
    grid-area: full;
@@ -482,7 +480,6 @@ td:hover .editable-cell-icon {
   padding-left: 12px;
 }
 .ant-table-wrapper {
-  max-width: 980px;
   min-height: 80vh;
 }
 #isd_app .ant-layout {
