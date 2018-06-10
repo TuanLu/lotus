@@ -18,7 +18,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
           "passthrough" => ["/import"]
       ])
   ],
-  "secure" => false,//Should use HTTPS request
+  "secure" => true,//Should use HTTPS request
   "relaxed" => ["localhost", "127.0.0.1"],
   "secret" => $ISD_KEY,
   "callback" => function ($request, $response, $arguments) use ($container) {
