@@ -46,7 +46,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
       'showTooltip' => true,
       'title' => array(
         'display' => true,
-		'text' => 'Tổng doanh số các tỉnh năm ' . $year
+		    'text' => 'Tổng doanh số các tỉnh năm ' . $year
       ),
       'scales' => [
         'xAxes' => [
@@ -55,8 +55,8 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
               'beginAtZero' => true
             ],
             'scaleLabel' => [
-              'display' => false,
-              'labelString' => "Biểu đồ doanh thu các năm",
+              'display' => true,
+              'labelString' => "Triệu (VND)",
               'fontStyle' => 'bold',
               'fontColor' => '#ccc'
             ]
@@ -69,7 +69,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
             ],
             'scaleLabel' => [
               'display' => true,
-              'labelString' => 'Triệu (VND)',
+              'labelString' => 'Danh sách các tỉnh',
               'fontStyle' => 'bold',
               'fontColor' => '#ccc'
             ]
@@ -135,8 +135,8 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
               'beginAtZero' => true
             ],
             'scaleLabel' => [
-              'display' => false,
-              'labelString' => "Biểu đồ doanh thu các năm",
+              'display' => true,
+              'labelString' => "Triệu (VND)",
               'fontStyle' => 'bold',
               'fontColor' => '#ccc'
             ]
@@ -149,7 +149,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
             ],
             'scaleLabel' => [
               'display' => true,
-              'labelString' => 'Triệu (VND)',
+              'labelString' => 'Danh sách các tỉnh',
               'fontStyle' => 'bold',
               'fontColor' => '#ccc'
             ]
@@ -206,7 +206,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
       'showTooltip' => true,
       'title' => array(
         'display' => true,
-		'text' => "Tổng doanh số các tỉnh tháng $month năm $year"
+		    'text' => "Tổng doanh số các tỉnh tháng $month năm $year"
       ),
       'scales' => [
         'xAxes' => [
@@ -215,8 +215,8 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
               'beginAtZero' => true
             ],
             'scaleLabel' => [
-              'display' => false,
-              'labelString' => "Biểu đồ doanh thu các năm",
+              'display' => true,
+              'labelString' => "Triệu (VND)",
               'fontStyle' => 'bold',
               'fontColor' => '#ccc'
             ]
@@ -229,7 +229,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
             ],
             'scaleLabel' => [
               'display' => true,
-              'labelString' => 'Triệu (VND)',
+              'labelString' => 'Danh sách các tỉnh',
               'fontStyle' => 'bold',
               'fontColor' => '#ccc'
             ]
@@ -295,8 +295,8 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
               'beginAtZero' => true
             ],
             'scaleLabel' => [
-              'display' => false,
-              'labelString' => "Biểu đồ doanh thu các năm",
+              'display' => true,
+              'labelString' => "Triệu (VND)",
               'fontStyle' => 'bold',
               'fontColor' => '#ccc'
             ]
@@ -309,7 +309,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
             ],
             'scaleLabel' => [
               'display' => true,
-              'labelString' => 'Triệu (VND)',
+              'labelString' => 'Danh sách các tỉnh',
               'fontStyle' => 'bold',
               'fontColor' => '#ccc'
             ]
