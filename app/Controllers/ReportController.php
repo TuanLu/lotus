@@ -79,7 +79,7 @@ class ReportController extends BaseController {
       'status' => 'error',
       'message' => 'Không tìm thấy sản phẩm nào!'
     );
-    $product = $this->db->select('products', ['product_id', 'name']);
+    $product = $this->db->select('products', ['product_id', 'name'], ['status' => 1]);
     if(!empty($product)) {
       $data['status'] = 'success';
       $data['message'] = 'Product loaded!';
