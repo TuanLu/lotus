@@ -67,8 +67,9 @@ class OrderController extends BaseController {
     $preOrderData = $order->getPreOrderData();
     if(isset($preOrderData['products']) 
        && !empty($preOrderData['products']) 
-       && isset($preOrderData['stores']) 
-       && !empty($preOrderData['stores'])) {
+       //&& isset($preOrderData['stores']) 
+       //&& !empty($preOrderData['stores'])
+       ) {
       $rsData['message'] = 'Dữ liệu đã được load!';
       $rsData['data'] = $preOrderData;
     }
