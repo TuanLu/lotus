@@ -60,3 +60,7 @@ $app->get('/tdv/deleteTdv/{id}', 'TdvController:deleteTdv');
 $app->get('/exchange/fetchExchange', 'ExchangeController:fetchExchange');
 $app->post('/exchange/updateExchange', 'ExchangeController:updateExchange');
 $app->get('/exchange/deleteExchange/{id}', 'ExchangeController:deleteExchange');
+//NPP routers
+$app->get('/agency/fetchAgency', 'AgencyController:fetchAgency');
+$app->post('/agency/updateAgency', 'AgencyController:updateAgency');
+$app->get('/agency/deleteAgency/{id}', 'AgencyController:deleteAgency');
