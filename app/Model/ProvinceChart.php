@@ -21,7 +21,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
     if(empty($data)) {
       return array(
         'status' => 'error', 
-        'message' => 'Empty data!'
+        'message' => 'Không có dữ liệu!'
       );
     }
     $report = array();
@@ -29,6 +29,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
       $report['labels'][] = $item['tinh'];
       $report['data'][] = $item['doanhthu'];
     }
+    $total_num = count($data);
     $chartData = array(
       'labels' => $report['labels'],
       'datasets' => array(
@@ -83,7 +84,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
       
     );
     $barChart['width'] = 300;
-    //$barChart['height'] = 300;
+    $barChart['height'] = 50*$total_num + 120;
     return $barChart;
   }
   public function reportByProvovinceQuarter($year, $productId, $area, $quarter) {
@@ -101,9 +102,10 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
     if(empty($data)) {
       return array(
         'status' => 'error', 
-        'message' => 'Empty data!'
+        'message' => 'Không có dữ liệu!'
       );
     }
+    $total_num = count($data);
     $report = array();
     foreach($data as $item) {
       $report['labels'][] = $item['tinh'];
@@ -163,7 +165,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
       
     );
     $barChart['width'] = 300;
-    //$barChart['height'] = 300;
+    $barChart['height'] = 50*$total_num + 120;
     return $barChart;
   }
   public function reportByProvovinceMonth($year, $productId, $area, $month) {
@@ -178,10 +180,11 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
 select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provinces.name as 'tinh' from district,provinces,areas WHERE district.parent_code = provinces.code AND provinces.area_code = areas.area_code
 ) as khuvuc, orders,nha_thuoc WHERE orders.store_id = nha_thuoc.store_id AND nha_thuoc.district_id = khuvuc.code AND ". $where ." GROUP BY mien,tinh ORDER BY doanhthu DESC";
     $data = $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    $total_num = count($data);
     if(empty($data)) {
       return array(
         'status' => 'error', 
-        'message' => 'Empty data!'
+        'message' => 'Không có dữ liệu!'
       );
     }
     $report = array();
@@ -243,7 +246,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
       
     );
     $barChart['width'] = 300;
-    $barChart['height'] = 300;
+    $barChart['height'] = 50*$total_num + 120;
     return $barChart;
   }
   public function reportByProvovinceWeek($year, $productId, $area, $week) {
@@ -258,10 +261,11 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
 select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provinces.name as 'tinh' from district,provinces,areas WHERE district.parent_code = provinces.code AND provinces.area_code = areas.area_code
 ) as khuvuc, orders,nha_thuoc WHERE orders.store_id = nha_thuoc.store_id AND nha_thuoc.district_id = khuvuc.code AND ". $where ." GROUP BY mien,tinh ORDER BY doanhthu DESC";
     $data = $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    $total_num = count($data);
     if(empty($data)) {
       return array(
         'status' => 'error', 
-        'message' => 'Empty data!'
+        'message' => 'Không có dữ liệu!'
       );
     }
     $report = array();
@@ -323,7 +327,7 @@ select district.code, areas.area_code as 'ma_mien', areas.name as 'mien', provin
       
     );
     $barChart['width'] = 300;
-    $barChart['height'] = 300;
+    $barChart['height'] = 50*$total_num + 120;
     return $barChart;
   }
 }
