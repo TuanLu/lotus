@@ -1,11 +1,11 @@
 @font-face {
-    font-family: "Gotham Bold";
-    src: url(Fonts/Gotham-Bold.ttf);
+    font-family: "SegoeUI";
+    src: url(../fonts/SegoeUI.ttf);
 }
 *{
     padding: 0; 
     margin: 0;
-    font-family: "Roboto";
+    font-family: "SegoeUI";
     /* -webkit-transition: all .6s;
     -moz-transition: all .6s;
     -o-transition: all .6s;
