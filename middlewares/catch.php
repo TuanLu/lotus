@@ -19,7 +19,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
       ])
   ],
   "secure" => true,//Should use HTTPS request
-  "relaxed" => ["localhost", "127.0.0.1", "annhien"],
+  "relaxed" => ["localhost", "127.0.0.1", "annhien", "erpapp"],
   "secret" => $ISD_KEY,
   "callback" => function ($request, $response, $arguments) use ($container) {
       $container["jwt"] = $arguments["decoded"];
