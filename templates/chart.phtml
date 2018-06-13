@@ -1,3 +1,23 @@
+<?php 
+$serverName = $_SERVER['SERVER_NAME'];
+$jsUrl = $data['base_url'];
+switch($serverName) {
+ case 'localhost':
+ case 'erpapp':
+ case 'annhien':
+ case '127.0.0.1':
+   //If webpack server is running, then reference all files from there
+   $devServerContent = @file_get_contents('http://localhost:8080/public/ishopdesign.min.js');
+   if($devServerContent !== false) {
+     $jsUrl = 'http://localhost:8080/public';
+   }
+   break;
+ default:
+  $jsUrl = $data['base_url'];
+   break;
+}
+/** End check asset path for developer purpose **/
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,10 +34,11 @@
       window.ISD_BASE_URL = '<?php echo $data['base_url'] ?>/';
       window.ISD_CURRENT_PAGE = '<?php echo isset($_GET['page'])? $_GET['page'] : ''  ?>';
     </script>
-
-  <script src="<?php echo $data['base_url'] ?>/js/chart.vendors.min.js"></script>
-  <script src="<?php echo $data['base_url'] ?>/js/lotuschart.min.js"></script>
-
-  <!-- <script src="http://localhost:8080/public/ishopdesign.min.js"></script> -->
+    <?php if(strpos($jsUrl, '8080') !== false) : ?>
+    <script src="<?php echo $jsUrl ?>/ishopdesign.min.js"></script>
+    <?php else : ?>
+    <script src="<?php echo $jsUrl ?>/js/chart.vendors.min.js"></script>
+    <script src="<?php echo $jsUrl ?>/js/lotuschart.min.js"></script>
+    <?php endif; ?>
   </body>
 </html>
