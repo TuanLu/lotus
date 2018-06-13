@@ -7,7 +7,11 @@
     "start": "./node_modules/.bin/webpack-dev-server --inline",
     "devChart": "./node_modules/.bin/webpack-dev-server --inline --config ./webpack.chart.config.js",
     "deploy": "webpack -p --config ./webpack.production.config.js",
-    "deployChart": "webpack -p --config ./webpack.chart.production.config.js"
+    "deployChart": "webpack -p --config ./webpack.chart.production.config.js",
+    "up_all": "./deploy_shell/deploy_all.sh",
+    "up_js": "./deploy_shell/deploy_js.sh",
+    "up_code": "./deploy_shell/deploy_code.sh",
+    "up_style": "./deploy_shell/deploy_style.sh"
   },
   "author": "Tuan Lu",
   "license": "MIT",
